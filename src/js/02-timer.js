@@ -21,7 +21,7 @@ flatpickr(datetimePicker, {
 });
 
 function showAlert(message) {
-    Notiflix.Notify.Warning(message);
+    Notiflix.Notify.warning(message);
   }
 
   function convertMs(ms) {
