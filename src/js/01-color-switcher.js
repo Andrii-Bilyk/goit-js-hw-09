@@ -24,5 +24,7 @@ function getRandomHexColor() {
     }
   }
   
+  stopButton.disabled = true;
+
   startButton.addEventListener('click', handleButtonClick);
   stopButton.addEventListener('click', handleButtonClick);

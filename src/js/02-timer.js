@@ -50,30 +50,31 @@ function showAlert(message) {
     seconds: document.querySelector('[data-seconds]'),
   };
   
-  let countdownInterval;
-  
-  function updateTimerDisplay(time) {
-    timerFields.days.textContent = addLeadingZero(time.days);
-    timerFields.hours.textContent = addLeadingZero(time.hours);
-    timerFields.minutes.textContent = addLeadingZero(time.minutes);
-    timerFields.seconds.textContent = addLeadingZero(time.seconds);
+  let countdownInterval; 
+
+function updateTimerDisplay(time) {
+  timerFields.days.textContent = addLeadingZero(time.days);
+  timerFields.hours.textContent = addLeadingZero(time.hours);
+  timerFields.minutes.textContent = addLeadingZero(time.minutes);
+  timerFields.seconds.textContent = addLeadingZero(time.seconds);
+}
+
+startButton.disabled = true;
+
+startButton.addEventListener('click', () => {
+  const selectedDate = datetimePicker._flatpickr.selectedDates[0];
+  const currentDate = new Date();
+  if (selectedDate > currentDate) {
+    clearInterval(countdownInterval);
+    countdownInterval = setInterval(() => {
+      const timeDifference = selectedDate - currentDate; 
+      const timeLeft = convertMs(timeDifference);
+      updateTimerDisplay(timeLeft);
+      if (timeDifference <= 0) {
+        clearInterval(countdownInterval);
+        showAlert("Time's up!");
+      }
+      currentDate.setSeconds(currentDate.getSeconds() + 1);
+    }, 1000);
   }
-  
-  startButton.addEventListener('click', () => {
-    const selectedDate = datetimePicker._flatpickr.selectedDates[0];
-    const currentDate = new Date();
-    if (selectedDate > currentDate) {
-      const timeDifference = selectedDate - currentDate;
-      clearInterval(countdownInterval); 
-      countdownInterval = setInterval(() => {
-        const timeLeft = convertMs(timeDifference);
-        updateTimerDisplay(timeLeft);
-        if (timeDifference <= 0) {
-          clearInterval(countdownInterval);
-          showAlert("Time's up!");
-        }
-        timeDifference -= 1000;
-      }, 1000);
-    }
-  });
-  
+});
