@@ -70,7 +70,10 @@ startButton.addEventListener('click', () => {
       const timeDifference = selectedDate - currentDate; 
       const timeLeft = convertMs(timeDifference);
       updateTimerDisplay(timeLeft);
-      if (timeDifference <= 0) {
+
+      console.log(timeDifference);
+
+      if (timeDifference <= 1000) {
         clearInterval(countdownInterval);
         showAlert("Time's up!");
       }
